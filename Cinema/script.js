@@ -1,22 +1,26 @@
-
-// SALVAR FILME
+// =====================
+// FILMES
+// =====================
 function salvarFilme() {
   const filme = {
-    titulo: document.getElementById("titulo").value,
-    genero: document.getElementById("genero").value,
-    descricao: document.getElementById("descricao").value,
-    duracao: document.getElementById("duracao").value
+    titulo: titulo.value,
+    genero: genero.value,
+    descricao: descricao.value,
+    classificacao: classificacao.value,
+    duracao: duracao.value,
+    estreia: estreia.value
   };
 
   let filmes = JSON.parse(localStorage.getItem("filmes")) || [];
   filmes.push(filme);
-
   localStorage.setItem("filmes", JSON.stringify(filmes));
 
   alert("Filme salvo!");
 }
 
-// SALVAR SALA
+// =====================
+// SALAS
+// =====================
 function salvarSala() {
   const sala = {
     nome: nomeSala.value,
@@ -32,69 +36,131 @@ function salvarSala() {
   alert("Sala salva!");
 }
 
-// SALVAR SESSÃO
+// =====================
+// CARREGAR SELECTS (SESSÕES)
+// =====================
 function carregarSelects() {
-  let filmes = JSON.parse(localStorage.getItem("filmes")) || [];
-  let salas = JSON.parse(localStorage.getItem("salas")) || [];
+  const selectFilme = document.getElementById("filme");
+  const selectSala = document.getElementById("sala");
+
+  if (!selectFilme || !selectSala) return; // evita erro
+
+  const filmes = JSON.parse(localStorage.getItem("filmes")) || [];
+  const salas = JSON.parse(localStorage.getItem("salas")) || [];
 
   filmes.forEach((f, i) => {
-    filme.innerHTML += `<option value="${i}">${f.titulo}</option>`;
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = f.titulo;
+    selectFilme.appendChild(option);
   });
 
   salas.forEach((s, i) => {
-    sala.innerHTML += `<option value="${i}">${s.nome}</option>`;
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = s.nome;
+    selectSala.appendChild(option);
   });
 }
 
+// =====================
+// SALVAR SESSÃO
+// =====================
 function salvarSessao() {
+  const sessao = {
+    filme: document.getElementById("filme").value,
+    sala: document.getElementById("sala").value,
+    data: document.getElementById("data").value,
+    preco: document.getElementById("preco").value,
+    idioma: document.getElementById("idioma").value,
+    formato: document.getElementById("formato").value
+  };
+
   let sessoes = JSON.parse(localStorage.getItem("sessoes")) || [];
-
-  sessoes.push({
-    filme: filme.value,
-    sala: sala.value,
-    data: data.value,
-    preco: preco.value
-  });
-
+  sessoes.push(sessao);
   localStorage.setItem("sessoes", JSON.stringify(sessoes));
 
-  alert("Sessão salva!");
+  alert("Sessão cadastrada!");
 }
 
-carregarSelects();
+// =====================
+// CARREGAR SESSÕES (VENDA)
+// =====================
+function carregarSessoes() {
+  const select = document.getElementById("sessao");
+  if (!select) return;
 
-// COMPRAR INGRESSO
-function comprar() {
-  let ingressos = JSON.parse(localStorage.getItem("ingressos")) || [];
+  const sessoes = JSON.parse(localStorage.getItem("sessoes")) || [];
 
-  ingressos.push({
-    sessao: sessao.value,
-    cliente: cliente.value,
-    cpf: cpf.value
+  select.innerHTML = '<option value="">Selecione a Sessão</option>';
+
+  sessoes.forEach((s, i) => {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = `Sessão ${i + 1} - ${s.data}`;
+    select.appendChild(option);
   });
+}
 
+// =====================
+// VENDER INGRESSO
+// =====================
+function venderIngresso() {
+  const ingresso = {
+    sessao: document.getElementById("sessao").value,
+    cliente: document.getElementById("cliente").value,
+    cpf: document.getElementById("cpf").value,
+    assento: document.getElementById("assento").value,
+    pagamento: document.getElementById("pagamento").value
+  };
+
+  let ingressos = JSON.parse(localStorage.getItem("ingressos")) || [];
+  ingressos.push(ingresso);
   localStorage.setItem("ingressos", JSON.stringify(ingressos));
 
-  alert("Compra realizada!");
+  alert("Ingresso vendido com sucesso!");
 }
 
+// =====================
 // LISTAR SESSÕES
+// =====================
 function listarSessoes() {
+  const lista = document.getElementById("lista");
+  if (!lista) return;
+
   let sessoes = JSON.parse(localStorage.getItem("sessoes")) || [];
   let filmes = JSON.parse(localStorage.getItem("filmes")) || [];
   let salas = JSON.parse(localStorage.getItem("salas")) || [];
 
   lista.innerHTML = "";
 
+  if (sessoes.length === 0) {
+    lista.innerHTML = "<li class='list-group-item'>Nenhuma sessão cadastrada</li>";
+    return;
+  }
+
   sessoes.forEach(s => {
-    lista.innerHTML += `
-      <li>
-        ${filmes[s.filme].titulo} - 
-        ${salas[s.sala].nome} - 
-        ${s.data} - R$${s.preco}
-      </li>
+    const filme = filmes[s.filme];
+    const sala = salas[s.sala];
+
+    const item = document.createElement("li");
+    item.className = "list-group-item";
+
+    item.textContent = `
+      ${filme ? filme.titulo : "Filme não encontrado"} - 
+      ${sala ? sala.nome : "Sala não encontrada"} - 
+      ${s.data} - R$${s.preco}
     `;
+
+    lista.appendChild(item);
   });
 }
 
-listarSessoes();
+// =====================
+// INICIALIZAÇÃO
+// =====================
+document.addEventListener("DOMContentLoaded", () => {
+  carregarSelects();
+  carregarSessoes(); // 🔥 ESSENCIAL
+  listarSessoes();
+});
