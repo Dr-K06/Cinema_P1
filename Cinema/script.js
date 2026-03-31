@@ -14,3 +14,19 @@ function salvarFilme() {
 
   alert("Filme salvo!");
 }
+
+// SALVAR SALA
+function salvarSala() {
+  const sala = {
+    nome: nomeSala.value,
+    capacidade: capacidade.value,
+    tipo: tipo.value
+  };
+
+  let salas = JSON.parse(localStorage.getItem("salas")) || [];
+  salas.push(sala);
+
+  localStorage.setItem("salas", JSON.stringify(salas));
+
+  alert("Sala salva!");
+}
