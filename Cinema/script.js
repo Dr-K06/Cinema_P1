@@ -61,3 +61,18 @@ function salvarSessao() {
 }
 
 carregarSelects();
+
+// COMPRAR INGRESSO
+function comprar() {
+  let ingressos = JSON.parse(localStorage.getItem("ingressos")) || [];
+
+  ingressos.push({
+    sessao: sessao.value,
+    cliente: cliente.value,
+    cpf: cpf.value
+  });
+
+  localStorage.setItem("ingressos", JSON.stringify(ingressos));
+
+  alert("Compra realizada!");
+}
