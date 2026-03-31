@@ -87,7 +87,7 @@ function salvarSessao() {
 // CARREGAR SESSÕES (VENDA)
 // =====================
 function carregarSessoes() {
-  const select = document.getElementById("sessao");
+  const select = document.getElementById("sessoes");
   if (!select) return;
 
   const sessoes = JSON.parse(localStorage.getItem("sessoes")) || [];
@@ -107,7 +107,7 @@ function carregarSessoes() {
 // =====================
 function venderIngresso() {
   const ingresso = {
-    sessao: document.getElementById("sessao").value,
+    sessoes: document.getElementById("sessoes").value,
     cliente: document.getElementById("cliente").value,
     cpf: document.getElementById("cpf").value,
     assento: document.getElementById("assento").value,
