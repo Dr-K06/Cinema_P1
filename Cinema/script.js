@@ -30,3 +30,34 @@ function salvarSala() {
 
   alert("Sala salva!");
 }
+
+// SALVAR SESSÃO
+function carregarSelects() {
+  let filmes = JSON.parse(localStorage.getItem("filmes")) || [];
+  let salas = JSON.parse(localStorage.getItem("salas")) || [];
+
+  filmes.forEach((f, i) => {
+    filme.innerHTML += `<option value="${i}">${f.titulo}</option>`;
+  });
+
+  salas.forEach((s, i) => {
+    sala.innerHTML += `<option value="${i}">${s.nome}</option>`;
+  });
+}
+
+function salvarSessao() {
+  let sessoes = JSON.parse(localStorage.getItem("sessoes")) || [];
+
+  sessoes.push({
+    filme: filme.value,
+    sala: sala.value,
+    data: data.value,
+    preco: preco.value
+  });
+
+  localStorage.setItem("sessoes", JSON.stringify(sessoes));
+
+  alert("Sessão salva!");
+}
+
+carregarSelects();
