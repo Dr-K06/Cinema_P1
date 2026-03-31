@@ -1,3 +1,4 @@
+
 // SALVAR FILME
 function salvarFilme() {
   const filme = {
@@ -76,3 +77,24 @@ function comprar() {
 
   alert("Compra realizada!");
 }
+
+// LISTAR SESSÕES
+function listarSessoes() {
+  let sessoes = JSON.parse(localStorage.getItem("sessoes")) || [];
+  let filmes = JSON.parse(localStorage.getItem("filmes")) || [];
+  let salas = JSON.parse(localStorage.getItem("salas")) || [];
+
+  lista.innerHTML = "";
+
+  sessoes.forEach(s => {
+    lista.innerHTML += `
+      <li>
+        ${filmes[s.filme].titulo} - 
+        ${salas[s.sala].nome} - 
+        ${s.data} - R$${s.preco}
+      </li>
+    `;
+  });
+}
+
+listarSessoes();

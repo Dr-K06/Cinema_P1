@@ -1,17 +1,44 @@
-<body class="container mt-4">
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<h2>Cadastro de Sala</h2>
+<title>Salas</title>
 
-<input id="nomeSala" class="form-control mb-2" placeholder="Nome">
-<input id="capacidade" type="number" class="form-control mb-2" placeholder="Capacidade">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<select id="tipo" class="form-control mb-2">
-  <option>2D</option>
-  <option>3D</option>
-  <option>IMAX</option>
+<style>
+  body { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); min-height: 100vh; }
+  .main-card { border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+  h2 { color: white; }
+</style>
+
+</head>
+<body>
+    
+
+<div class="container py-5">
+
+<h2 class="text-center mb-4">Cadastro de Sala</h2>
+
+<div class="card main-card p-4">
+
+<input id="nomeSala" class="form-control mb-3" placeholder="Nome">
+<input id="capacidade" type="number" class="form-control mb-3" placeholder="Capacidade">
+
+<select id="tipo" class="form-control mb-3">
+<option>2D</option>
+<option>3D</option>
+<option>IMAX</option>
 </select>
 
-<button class="btn btn-primary" onclick="salvarSala()">Salvar</button>
+<button class="btn btn-success w-100" onclick="salvarSala()">Salvar</button>
+
+</div>
+
+</div>
 
 <script src="script.js"></script>
 </body>
+</html>
